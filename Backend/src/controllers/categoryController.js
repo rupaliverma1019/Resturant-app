@@ -37,3 +37,12 @@ export const addCategory = async(req,res) =>{
         return res.status(401).json({message : `Internal Server Error`  , success : true})
     }
 }
+
+export const getAllCategory = async(req,res)=>{
+    try {
+       const categories =  await Category.find().sort({createdAt:-1})
+       res.status(200).json({success : true , categories})
+    } catch (error) {
+        res.status(500).json({message : `Internal server Error`})
+    }
+}
