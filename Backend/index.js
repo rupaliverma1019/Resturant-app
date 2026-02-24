@@ -3,6 +3,7 @@ import dotenv from "dotenv"
 import cookieParser from "cookie-parser"
 import cors from "cors"   // ✅ ADD THIS
 import { connectDB } from "./src/config/db.js"
+import authRoutes from "./src/routers/authRoutes.js"
 dotenv.config()
 
 const app = express()
@@ -17,7 +18,7 @@ const PORT = process.env.PORT || 3000
 app.get("/", (req , res)=>{
     res.send("Hello from Server")
 })
-
+app.use("/api/auth" , authRoutes)
 app.listen(PORT , ()=>{
     console.log(`Server running on Port ${PORT}`)
 })
