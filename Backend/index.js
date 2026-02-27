@@ -4,6 +4,8 @@ import cookieParser from "cookie-parser"
 import cors from "cors"   // ✅ ADD THIS
 import { connectDB } from "./src/config/db.js"
 import authRoutes from "./src/routers/authRoutes.js"
+import categoryRoutes from "./src/routers/categoryRoutes.js"
+import connectCloudinary from "./src/config/cloudinary.js";
 dotenv.config()
 
 const app = express()
@@ -19,6 +21,8 @@ app.get("/", (req , res)=>{
     res.send("Hello from Server")
 })
 app.use("/api/auth" , authRoutes)
+app.use("/api/category" , categoryRoutes)
+connectCloudinary();
 app.listen(PORT , ()=>{
     console.log(`Server running on Port ${PORT}`)
 })
