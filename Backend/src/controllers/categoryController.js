@@ -109,3 +109,5 @@ export const deleteCategory = async(req , res)=>{
         })
     }
 }
+
+// http://localhost:5000/api/category/addcategory 
