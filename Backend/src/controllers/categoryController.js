@@ -16,7 +16,7 @@ export const addCategory = async(req,res) =>{
        {
         return res.status(400).json(
             {
-                message:"User already exist",
+                message:"Item already exist",
 
             }
         )

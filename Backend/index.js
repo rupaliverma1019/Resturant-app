@@ -8,6 +8,8 @@ import categoryRoutes from "./src/routers/categoryRoutes.js"
 import connectCloudinary from "./src/config/cloudinary.js";
 import cartRoute from "./src/routers/cartRoute.js"
 import addMenuRoutes from "./src/routers/addMenu.js"
+import { Order } from "./src/models/orderModel.js"
+import orderRoutes from "./src/routers/orderRoutes.js"
 dotenv.config()
 const app = express()
 connectDB()
@@ -26,6 +28,7 @@ app.use("/api/auth" , authRoutes)
 app.use("/api/category" , categoryRoutes)
 app.use("/api/menu" , addMenuRoutes)
 app.use("/api/cart" , cartRoute)
+app.use("/api/order" , orderRoutes)
 connectCloudinary();
 app.listen(PORT , ()=>{
     console.log(`Server running on Port ${PORT}`)
