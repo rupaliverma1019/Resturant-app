@@ -5,7 +5,9 @@ import { addCategory , deleteCategory, getAllCategory, updateCategory } from "..
 
 const categoryRoutes = express.Router()
 categoryRoutes.get("/allcategory" , getAllCategory)
+// http://localhost:5000/api/category/allcategory
 categoryRoutes.post("/addcategory" , adminOnly , upload.single("image") , addCategory)
+// http://localhost:5000/api/category/addcategory
 categoryRoutes.put("/updatecategory/:id" , adminOnly , upload.single("image"),updateCategory)
 categoryRoutes.delete("/deletecategory/:id", adminOnly , deleteCategory)
 

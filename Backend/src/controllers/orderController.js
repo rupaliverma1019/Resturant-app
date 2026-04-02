@@ -83,6 +83,17 @@ export const updateOrderStatus = async(req , res) =>{
     }
 }
 
+export const getUserOrders = async(req , res) =>{
+    try {
+        const orders = await Order.find().populate("user").sort({createdAt : -1})
+        res.status(200).json(orders)
+        
+    } catch (error) {
+               console.log(error);
+        return res.json({message: "Internal Server Error " , success : false})
+    }
+}
+
 
 
 
