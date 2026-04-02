@@ -45,40 +45,48 @@ export const registerUser = async(req,res) =>{
 }
 
 // Login  
-export const loginUser = async(req, res)=>{
-    try {
-        const {email , password} = req.body;
-        if(!email || !password)
-        {
-            return res.json({message: `Please Enter Email and password`})
-        }
-        const user = await User.findOne({email})
-        if(!user)
-        {
-           if (!user) {
-  return res.status(404).json({ message: "User does not exist" });
-}
-        }
-        const matchPassword = await bcrypt.compare(password, user.password)
-        if(!matchPassword)
-        {
-            return res.json({message : `Invalid Credential `})
-        }
-        generateToken(res , {id: user._id , role : user.isAdmin?"admin" : "user"})
-        res.json({
-            message:"User logged in successfully ", 
-            success : true,
-            user: {
-                name : user.name,
-                email : user.email
-            }
-        })
-    } catch (error) {
-        console.log(error.message);
-         return res.status(500).json({ message: "Server error" });
-        
+export const loginUser = async (req, res) => {
+  try {
+    const { email, password } = req.body || {};
+
+    if (!email || !password) {
+      return res.status(400).json({ message: "Please enter email and password" });
     }
-}
+
+    const user = await User.findOne({ email });
+
+    // ✅ FIXED
+    if (!user) {
+      return res.status(404).json({ message: "User does not exist" });
+    }
+
+    // ✅ Password compare
+    const matchPassword = await bcrypt.compare(password, user.password);
+
+    if (!matchPassword) {
+      return res.status(400).json({ message: "Invalid Credentials" });
+    }
+
+    // ✅ Token
+    generateToken(res, {
+      id: user._id,
+      role: user.isAdmin ? "admin" : "user",
+    });
+
+    return res.status(200).json({
+      message: "User logged in successfully",
+      success: true,
+      user: {
+        name: user.name,
+        email: user.email,
+      },
+    });
+
+  } catch (error) {
+    console.log("LOGIN ERROR:", error); // 👈 IMPORTANT
+    return res.status(500).json({ message: "Server error" });
+  }
+};
 // logout User
 export const logoutUser = async(req, res)=>{
     try {
